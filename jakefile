@@ -1,0 +1,110 @@
+var fs = require('fs'),
+    sax = require("sax"),
+    async = require('async'),
+    words = [];
+
+function parse(file, done){
+    var stream = sax.createStream(),
+        word;
+
+    stream.on("opentag", function (node) {
+
+        if (node.name === 'text') {
+            console.log(node);
+            return;
+        }
+
+        if (node.name.toLowerCase() === 'w'){
+            word = node;
+        }
+
+        if (node.name.toLowerCase() !== 'w' && word) {
+            word.info = node;
+        }
+
+    });
+
+    stream.on("closetag", function (name) {
+
+        if (!name) {
+            return;
+        }
+
+        if (name.toLowerCase() === 'w'){
+
+            words.push({
+
+                text: word.text,
+                ana: word.info.attributes
+
+            });
+
+        }
+
+    });
+
+    stream.on("text", function (text) {
+
+        if (word) {
+            word.text = text.replace('`', '').toLowerCase();
+        }
+
+    });
+
+    stream.on('end', function(err){
+
+        if (err) {
+            throw err;
+        }
+
+        console.log('Filer: ' +  './data/' + file + ' parsed.');
+        done(null, true);
+    });
+
+    fs.createReadStream('./data/' + file).pipe(stream);
+}
+
+function write() {
+
+    fs.writeFile("./dist/corpus.json", JSON.stringify(words).toLowerCase(), function(err) {
+
+        if (err) {
+            throw err;
+        }
+
+        complete();
+    });
+
+}
+
+desc('Build dictionaries');
+task('build', {async: true}, function(){
+
+    fs.readdir('./data/', function(err, files) {
+
+        if (err) {
+            throw err;
+        }
+
+        async.each(files, parse, function(err){
+
+            if (err) {
+                throw err;
+            }
+
+            fs.mkdir('./dist/',function(err){
+
+                if(!err || (err && err.code === 'EEXIST')){
+                    write();
+                } else {
+                    throw err;
+                }
+
+            });
+
+
+        });
+
+    });
+
+});

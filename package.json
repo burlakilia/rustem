@@ -1,0 +1,19 @@
+{
+    "name"          : "rustemm",
+    "version"       : "0.0.1",
+    "description"   : "Simple Russian postaggin utils",
+    "keywords"      : ["Stemming", "Pos Tagging"],
+    "author"        : "Burlak Ilia <burlak.psu.karelia.ru>",
+    "main"          : "./main.js",
+
+    "dependencies":{
+        "nodeunit": "*",
+        "async": "*",
+        "string": "*",
+        "jake": "*",
+        "sax": "*",
+        "natural": "*"
+    },
+
+    "scripts": { "install" : "jake build" }
+}
