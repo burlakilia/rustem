@@ -1,5 +1,5 @@
 {
-    "name"          : "rustemm",
+    "name"          : "rustem",
     "version"       : "0.0.1",
     "description"   : "Simple Russian postaggin utils",
     "keywords"      : ["Stemming", "Pos Tagging"],
