@@ -5,13 +5,13 @@ Simple Russian Pos-Tagging utility.
 You need download Russain Corpus from [Russian National Corpus](http://www.ruscorpora.ru).
 If you have corpus, create folder <b>data</b> and copy the file.
 
-<code>
-    <p>git clone http://github.com/burlakilia/rustem</p>
-    <p>npm install</p>
-<code>
+```javascript
+    git clone http://github.com/burlakilia/rustem
+    npm install
+```
 
 # Example
-<code>
+```javascript
     var rustem = require('rustem');
     rustem.recognize('привет текстовый парсер', function(err, stemms) {
 
@@ -21,5 +21,5 @@ If you have corpus, create folder <b>data</b> and copy the file.
 
         console.log(stemms);
     });
-</code>
+```
 
