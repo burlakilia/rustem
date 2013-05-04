@@ -15,8 +15,8 @@ exports['pos tagging should find all taggs'] = function(test){
                 throw err;
             }
 
-            console.log(res.length);
-            test.ok();
+            console.log(res[res.length-1]);
+            test.done();
         });
 	});
 	
